@@ -104,7 +104,7 @@ const HeroSection = () => {
             <div className="relative w-full aspect-square max-w-lg mx-auto">
               {/* Main Circle */}
               <div className="absolute inset-8 bg-gradient-to-br from-secondary to-card rounded-full shadow-warm-lg flex items-center justify-center overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=600&fit=crop&crop=faces" alt="משפחה וקשיש בארוחת שישי" className="w-full h-full object-cover" />
+                <img alt="משפחה וקשיש בארוחת שישי" className="w-full h-full object-cover" src="/lovable-uploads/f8763b3b-a505-4da4-becb-bfdaa234c81e.jpg" />
               </div>
 
               {/* Floating Elements */}
