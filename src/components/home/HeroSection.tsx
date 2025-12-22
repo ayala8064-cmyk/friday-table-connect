@@ -138,7 +138,7 @@ const HeroSection = () => {
               ease: "easeInOut"
             }} className="absolute bottom-12 right-0 bg-card p-4 rounded-2xl shadow-warm-lg">
                 <p className="text-3xl font-bold text-accent">2,500+</p>
-                <p className="text-sm text-muted-foreground">ארוחות שישי משותפות </p>
+                <p className="text-sm text-muted-foreground text-center">ארוחות שישי </p>
               </motion.div>
             </div>
           </motion.div>
