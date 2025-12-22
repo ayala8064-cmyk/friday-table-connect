@@ -17,8 +17,8 @@
     --popover: 40 25% 98%;
     --popover-foreground: 20 70% 18%;
 
-    /* Primary - Deep Orange */
-    --primary: 20 85% 42%;
+    /* Primary - Deep Burgundy Brown */
+    --primary: 10 45% 28%;
     --primary-foreground: 40 30% 98%;
 
     /* Secondary - Light warm */
@@ -70,8 +70,8 @@
     --popover: 20 25% 14%;
     --popover-foreground: 40 20% 92%;
 
-    --primary: 20 80% 55%;
-    --primary-foreground: 20 30% 10%;
+    --primary: 10 50% 45%;
+    --primary-foreground: 10 30% 10%;
 
     --secondary: 20 20% 18%;
     --secondary-foreground: 40 20% 92%;
