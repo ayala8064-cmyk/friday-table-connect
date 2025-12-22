@@ -77,16 +77,13 @@ const HeroSection = () => {
           }} className="flex items-center gap-6 mt-10 justify-center lg:justify-start text-muted-foreground">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse-soft" />
-                <span className="text-sm">ללא עלות</span>
+                <span className="text-sm">קרוב לבית </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse-soft" />
-                <span className="text-sm">פשוט ומהיר</span>
+                <span className="text-sm">​הרשמה קלה ופשוטה       </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse-soft" />
-                <span className="text-sm">בשכונה שלכם</span>
-              </div>
+              
             </motion.div>
           </motion.div>
 
@@ -137,8 +134,8 @@ const HeroSection = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }} className="absolute bottom-12 right-0 bg-card p-4 rounded-2xl shadow-warm-lg">
-                <p className="text-3xl font-bold text-accent">2,500+</p>
-                <p className="text-sm text-muted-foreground text-center">ארוחות שישי </p>
+                <p className="text-3xl font-bold text-accent text-center">2,500+</p>
+                <p className="text-sm text-muted-foreground text-center">        ארוחות שישי משותפות   </p>
               </motion.div>
             </div>
           </motion.div>
