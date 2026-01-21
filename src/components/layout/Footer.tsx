@@ -13,11 +13,14 @@ const Footer = () => {
               <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center">
                 <Heart className="w-6 h-6 text-accent-foreground" />
               </div>
-              <span className="text-2xl font-bold">קשישי</span>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold">קשישי-שבת</span>
+                <span className="text-sm text-primary-foreground/70">מארחים מכל הלב</span>
+              </div>
             </div>
             <p className="text-primary-foreground/80 leading-relaxed">
-              עמותה חברתית שמחברת בין קשישים לבין משפחות מהשכונה לארוחות שישי ביתיות. 
-              יחד נפיג בדידות וניצור קשרים בין-דוריים משמעותיים.
+              עמותה יהודית שמחברת בין קשישים לבין משפחות מהשכונה לסעודות שבת ביתיות. 
+              יחד נפיג בדידות וניצור קשרים בין-דוריים משמעותיים. שבת שלום!
             </p>
           </div>
 

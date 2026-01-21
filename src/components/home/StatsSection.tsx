@@ -19,7 +19,7 @@ const stats = [
   {
     icon: Calendar,
     value: 2500,
-    label: "ארוחות שישי",
+    label: "סעודות שבת",
     suffix: "+",
   },
   {

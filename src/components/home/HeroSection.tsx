@@ -42,8 +42,8 @@ const HeroSection = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
-              עמותת "קשישי" מחברת בין קשישים שחווים בדידות לבין משפחות מהשכונה, 
-              לארוחות שישי ביתיות וחמות. כי לכולנו מגיע להרגיש חלק ממשפחה.
+              עמותת "קשישי-שבת" מחברת בין קשישים שחווים בדידות לבין משפחות מהשכונה, 
+              לסעודות שבת ביתיות וחמות. כי לכולנו מגיע להרגיש חלק ממשפחה. <strong>שבת שלום!</strong>
             </p>
 
             <motion.div initial={{
@@ -101,7 +101,7 @@ const HeroSection = () => {
             <div className="relative w-full aspect-square max-w-lg mx-auto">
               {/* Main Circle */}
               <div className="absolute inset-8 bg-gradient-to-br from-secondary to-card rounded-full shadow-warm-lg flex items-center justify-center overflow-hidden">
-                <img alt="משפחה וקשיש בארוחת שישי" className="w-full h-full object-cover" src="/lovable-uploads/f8763b3b-a505-4da4-becb-bfdaa234c81e.jpg" />
+                <img alt="משפחה וקשיש בסעודת שבת" className="w-full h-full object-cover" src="/lovable-uploads/f8763b3b-a505-4da4-becb-bfdaa234c81e.jpg" />
               </div>
 
               {/* Floating Elements */}
@@ -135,7 +135,7 @@ const HeroSection = () => {
               ease: "easeInOut"
             }} className="absolute bottom-12 right-0 bg-card p-4 rounded-2xl shadow-warm-lg">
                 <p className="text-3xl font-bold text-accent text-center">2,500+</p>
-                <p className="text-sm text-muted-foreground text-center">        ארוחות שישי משותפות   </p>
+                <p className="text-sm text-muted-foreground text-center">סעודות שבת משותפות</p>
               </motion.div>
             </div>
           </motion.div>

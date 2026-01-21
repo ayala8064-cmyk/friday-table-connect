@@ -33,9 +33,10 @@ const Header = () => {
             <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center shadow-warm">
               <Heart className="w-6 h-6 text-accent-foreground" />
             </div>
-            <span className="text-2xl font-bold text-primary">קשישי
- 
-          </span>
+            <div className="flex flex-col">
+              <span className="text-2xl font-bold text-primary">קשישי-שבת</span>
+              <span className="text-xs text-muted-foreground">מארחים מכל הלב</span>
+            </div>
           </motion.a>
 
           {/* Desktop Navigation */}

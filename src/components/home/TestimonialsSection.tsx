@@ -5,7 +5,7 @@ import { Quote } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "מאז שהתחלתי להגיע למשפחת כהן, יום שישי חזר להיות היום הכי טוב בשבוע. הילדים מחכים לי, ואני מרגישה שוב חלק ממשפחה.",
+    quote: "מאז שהתחלתי להגיע למשפחת כהן, השבת שלי נהייתה שמחה ומוארת. הילדים מחכים לי, ואני מרגישה שוב חלק ממשפחה. שבת שלום!",
     author: "שרה, בת 78",
     role: "קשישה",
     image: "https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=150&h=150&fit=crop&crop=face",
@@ -17,7 +17,7 @@ const testimonials = [
     image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=150&h=150&fit=crop&crop=faces",
   },
   {
-    quote: "אחרי שאשתי נפטרה, הייתי לבד לגמרי. קשישי נתנה לי חיים חדשים. כל שבוע אני מחכה ליום שישי עם משפחת אברהם.",
+    quote: "אחרי שאשתי נפטרה, הייתי לבד לגמרי. קשישי-שבת נתנה לי חיים חדשים. כל שבוע אני מחכה לשבת עם משפחת אברהם. השבת שלי נהייתה מוארת!",
     author: "יעקב, בן 82",
     role: "קשיש",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
