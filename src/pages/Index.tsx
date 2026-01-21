@@ -10,12 +10,12 @@ import CTASection from "@/components/home/CTASection";
 
 const Index = () => {
   useEffect(() => {
-    document.title = "קשישי - מחברים בין קשישים למשפחות לארוחות שישי";
+    document.title = "קשישי-שבת - מחברים בין קשישים למשפחות לסעודות שבת";
     
     // Set meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'עמותת קשישי מפיגה בדידות של קשישים באמצעות חיבור למשפחות מהשכונה לארוחות שישי ביתיות. הצטרפו כמשפחה מארחת או כקשיש/ה וצרו קשר משמעותי.');
+      metaDescription.setAttribute('content', 'עמותת קשישי-שבת מפיגה בדידות של קשישים באמצעות חיבור למשפחות מהשכונה לסעודות שבת ביתיות. הצטרפו כמשפחה מארחת או כקשיש/ה וצרו קשר משמעותי. שבת שלום!');
     }
   }, []);
 
