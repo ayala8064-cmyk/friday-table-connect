@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      elderly: {
+        Row: {
+          address: string | null
+          birth_date: string | null
+          created_at: string
+          first_name: string
+          gender: string | null
+          id: string
+          last_name: string
+          origin: string | null
+          status: string | null
+        }
+        Insert: {
+          address?: string | null
+          birth_date?: string | null
+          created_at?: string
+          first_name: string
+          gender?: string | null
+          id?: string
+          last_name: string
+          origin?: string | null
+          status?: string | null
+        }
+        Update: {
+          address?: string | null
+          birth_date?: string | null
+          created_at?: string
+          first_name?: string
+          gender?: string | null
+          id?: string
+          last_name?: string
+          origin?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
