@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -315,46 +315,65 @@ const ElderlyRegistration = () => {
                       עם חשבון תוכלו לעקוב אחרי הסעודות שלכם ולראות פרטי המשפחות המארחות 🏠
                     </p>
 
-                    {wantAccount && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="space-y-2 pt-2"
-                      >
-                        <Label htmlFor="password" className="flex items-center gap-2">
-                          <Lock className="w-4 h-4 text-primary" />
-                          סיסמה *
-                        </Label>
-                        <div className="relative">
-                          <Input
-                            id="password"
-                            type={showPassword ? "text" : "password"}
-                            placeholder="לפחות 6 תווים"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            className="text-right pr-10"
-                            dir="ltr"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            {showPassword ? (
-                              <EyeOff className="w-4 h-4" />
-                            ) : (
-                              <Eye className="w-4 h-4" />
+                    <AnimatePresence initial={false}>
+                      {wantAccount && (
+                        <motion.div
+                          key="password-field"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ 
+                            opacity: 1, 
+                            height: "auto",
+                            transition: {
+                              height: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+                              opacity: { duration: 0.25, delay: 0.1 }
+                            }
+                          }}
+                          exit={{ 
+                            opacity: 0, 
+                            height: 0,
+                            transition: {
+                              height: { duration: 0.25, ease: [0.4, 0, 0.2, 1], delay: 0.05 },
+                              opacity: { duration: 0.15 }
+                            }
+                          }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-2 pt-2">
+                            <Label htmlFor="password" className="flex items-center gap-2">
+                              <Lock className="w-4 h-4 text-primary" />
+                              סיסמה *
+                            </Label>
+                            <div className="relative">
+                              <Input
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="לפחות 6 תווים"
+                                value={formData.password}
+                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                className="text-right pr-10"
+                                dir="ltr"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="w-4 h-4" />
+                                ) : (
+                                  <Eye className="w-4 h-4" />
+                                )}
+                              </button>
+                            </div>
+                            {!formData.email && (
+                              <p className="text-xs text-destructive">
+                                נא להזין אימייל למעלה כדי לפתוח חשבון
+                              </p>
                             )}
-                          </button>
-                        </div>
-                        {!formData.email && (
-                          <p className="text-xs text-destructive">
-                            נא להזין אימייל למעלה כדי לפתוח חשבון
-                          </p>
-                        )}
-                      </motion.div>
-                    )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Gender Selection */}
