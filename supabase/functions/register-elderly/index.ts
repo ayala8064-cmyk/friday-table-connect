@@ -18,14 +18,21 @@ const normalizeOrigin = (origin: string | null) => {
 
 const getCorsHeaders = (origin: string | null) => {
   const normalized = normalizeOrigin(origin);
-  const allowedOrigin = normalized && ALLOWED_ORIGINS.includes(normalized) ? normalized : "";
+  const allowedOrigin = normalized && ALLOWED_ORIGINS.includes(normalized) ? normalized : null;
 
-  return {
-    "Access-Control-Allow-Origin": allowedOrigin,
+  const headers: Record<string, string> = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
     "Vary": "Origin",
   };
+
+  // Only set ACAO when origin is explicitly allowlisted.
+  // (Avoid returning an empty ACAO value, which some browsers treat as missing.)
+  if (allowedOrigin) {
+    headers["Access-Control-Allow-Origin"] = allowedOrigin;
+  }
+
+  return headers;
 };
 
 // Rate limiting configuration
@@ -69,6 +76,11 @@ serve(async (req) => {
 
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
+    console.log("CORS preflight", {
+      origin,
+      normalizedOrigin: normalizeOrigin(origin),
+      allowed: !!(normalizeOrigin(origin) && ALLOWED_ORIGINS.includes(normalizeOrigin(origin)!)),
+    });
     return new Response(null, { headers: corsHeaders });
   }
 
