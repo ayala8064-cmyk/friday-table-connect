@@ -1,1 +1,4 @@
 project_id = "utbezivtozaeepvmqlfk"
+
+[functions.register-elderly]
+verify_jwt = false
