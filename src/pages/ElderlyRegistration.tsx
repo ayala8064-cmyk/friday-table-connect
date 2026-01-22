@@ -108,43 +108,50 @@ const ElderlyRegistration = () => {
     setIsSubmitting(true);
 
     try {
-      // If user wants account, create auth user first
-      if (wantAccount && formData.email && formData.password) {
-        const { error: authError } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/`,
-          },
-        });
+      // Use Edge Function for secure server-side validation and rate limiting
+      const { data, error } = await supabase.functions.invoke('register-elderly', {
+        body: {
+          first_name: formData.firstName.trim(),
+          last_name: formData.lastName.trim(),
+          birth_date: formData.birthDate || null,
+          address: formData.address.trim() || null,
+          origin: formData.origin,
+          gender: formData.gender,
+          phone: formData.phone.trim() || null,
+          email: formData.email.trim() || null,
+          create_account: wantAccount,
+          password: wantAccount ? formData.password : null,
+        },
+      });
 
-        if (authError) {
-          if (authError.message.includes("already registered")) {
-            toast({
-              title: "שגיאה",
-              description: "כתובת האימייל הזו כבר רשומה במערכת",
-              variant: "destructive",
-            });
-          } else {
-            throw authError;
-          }
-          setIsSubmitting(false);
-          return;
-        }
+      if (error) {
+        throw new Error(error.message || 'Registration failed');
       }
 
-      const { error } = await supabase.from("elderly" as any).insert({
-        first_name: formData.firstName.trim(),
-        last_name: formData.lastName.trim(),
-        birth_date: formData.birthDate || null,
-        address: formData.address.trim() || null,
-        origin: formData.origin,
-        gender: formData.gender,
-        phone: formData.phone.trim() || null,
-        email: formData.email.trim() || null,
-      } as any);
-
-      if (error) throw error;
+      if (data?.error) {
+        // Handle specific error messages from the Edge Function
+        if (data.error.includes('email') && data.error.includes('registered')) {
+          toast({
+            title: "שגיאה",
+            description: "כתובת האימייל הזו כבר רשומה במערכת",
+            variant: "destructive",
+          });
+        } else if (data.error.includes('Too many')) {
+          toast({
+            title: "שגיאה",
+            description: "יותר מדי ניסיונות הרשמה. נסו שוב מאוחר יותר.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "שגיאה",
+            description: data.error,
+            variant: "destructive",
+          });
+        }
+        setIsSubmitting(false);
+        return;
+      }
 
       toast({
         title: wantAccount ? "נרשמת והחשבון נפתח בהצלחה! 🎉" : "נרשמת בהצלחה! 🎉",
@@ -152,7 +159,7 @@ const ElderlyRegistration = () => {
       });
 
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Registration error:", error);
       toast({
         title: "שגיאה בהרשמה",
