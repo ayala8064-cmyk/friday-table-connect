@@ -9,11 +9,22 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5173",
 ];
 
+const normalizeOrigin = (origin: string | null) => {
+  if (!origin) return null;
+  // Some environments may include a trailing slash; browsers typically don't,
+  // but normalizing is harmless and avoids mismatches.
+  return origin.endsWith("/") ? origin.slice(0, -1) : origin;
+};
+
 const getCorsHeaders = (origin: string | null) => {
-  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : "";
+  const normalized = normalizeOrigin(origin);
+  const allowedOrigin = normalized && ALLOWED_ORIGINS.includes(normalized) ? normalized : "";
+
   return {
     "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Vary": "Origin",
   };
 };
 
@@ -62,10 +73,11 @@ serve(async (req) => {
   }
 
   // Validate origin for non-OPTIONS requests
-  if (!origin || !ALLOWED_ORIGINS.includes(origin)) {
+  const normalizedOrigin = normalizeOrigin(origin);
+  if (!normalizedOrigin || !ALLOWED_ORIGINS.includes(normalizedOrigin)) {
     return new Response(
       JSON.stringify({ error: "Forbidden origin" }),
-      { status: 403, headers: { "Content-Type": "application/json" } }
+      { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 
