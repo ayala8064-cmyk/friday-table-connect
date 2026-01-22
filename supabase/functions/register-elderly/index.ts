@@ -18,21 +18,17 @@ const normalizeOrigin = (origin: string | null) => {
 
 const getCorsHeaders = (origin: string | null) => {
   const normalized = normalizeOrigin(origin);
-  const allowedOrigin = normalized && ALLOWED_ORIGINS.includes(normalized) ? normalized : null;
+  const allowed = !!(normalized && ALLOWED_ORIGINS.includes(normalized));
 
-  const headers: Record<string, string> = {
+  // Always return an ACAO header. If the origin is not allowlisted we return "null"
+  // (this is explicit and avoids some browsers treating empty values as missing).
+  return {
+    "Access-Control-Allow-Origin": allowed ? normalized! : "null",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Max-Age": "86400",
     "Vary": "Origin",
   };
-
-  // Only set ACAO when origin is explicitly allowlisted.
-  // (Avoid returning an empty ACAO value, which some browsers treat as missing.)
-  if (allowedOrigin) {
-    headers["Access-Control-Allow-Origin"] = allowedOrigin;
-  }
-
-  return headers;
 };
 
 // Rate limiting configuration
@@ -81,7 +77,7 @@ serve(async (req) => {
       normalizedOrigin: normalizeOrigin(origin),
       allowed: !!(normalizeOrigin(origin) && ALLOWED_ORIGINS.includes(normalizeOrigin(origin)!)),
     });
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { status: 204, headers: corsHeaders });
   }
 
   // Validate origin for non-OPTIONS requests
