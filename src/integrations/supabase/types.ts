@@ -19,33 +19,39 @@ export type Database = {
           address: string | null
           birth_date: string | null
           created_at: string
+          email: string | null
           first_name: string
           gender: string | null
           id: string
           last_name: string
           origin: string | null
+          phone: string | null
           status: string | null
         }
         Insert: {
           address?: string | null
           birth_date?: string | null
           created_at?: string
+          email?: string | null
           first_name: string
           gender?: string | null
           id?: string
           last_name: string
           origin?: string | null
+          phone?: string | null
           status?: string | null
         }
         Update: {
           address?: string | null
           birth_date?: string | null
           created_at?: string
+          email?: string | null
           first_name?: string
           gender?: string | null
           id?: string
           last_name?: string
           origin?: string | null
+          phone?: string | null
           status?: string | null
         }
         Relationships: []
