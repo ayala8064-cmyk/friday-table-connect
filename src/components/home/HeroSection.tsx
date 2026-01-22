@@ -94,6 +94,10 @@ const HeroSection = () => {
                   alt="משפחה וקשיש בסעודת שבת"
                   className="w-full h-full object-cover"
                   src="/lovable-uploads/f8763b3b-a505-4da4-becb-bfdaa234c81e.jpg"
+                  fetchPriority="high"
+                  loading="eager"
+                  width={448}
+                  height={448}
                 />
               </div>
 

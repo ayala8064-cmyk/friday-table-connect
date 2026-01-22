@@ -8,19 +8,19 @@ const testimonials = [
     quote: "מאז שהתחלתי להגיע למשפחת כהן, השבת שלי נהייתה שמחה ומוארת. הילדים מחכים לי, ואני מרגישה שוב חלק ממשפחה. שבת שלום!",
     author: "שרה, בת 78",
     role: "קשישה",
-    image: "https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=150&h=150&fit=crop&crop=face",
+    image: "https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=56&h=56&fit=crop&crop=face&fm=webp&q=80",
   },
   {
     quote: "הילדים שלנו למדו כל כך הרבה מסבתא רחל. הסיפורים, החוכמה, האהבה - זה משהו שלא ניתן לתאר במילים. היא חלק מהמשפחה.",
     author: "משפחת לוי",
     role: "משפחה מארחת",
-    image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=150&h=150&fit=crop&crop=faces",
+    image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=56&h=56&fit=crop&crop=faces&fm=webp&q=80",
   },
   {
     quote: "אחרי שאשתי נפטרה, הייתי לבד לגמרי. קשישי-שבת נתנה לי חיים חדשים. כל שבוע אני מחכה לשבת עם משפחת אברהם. השבת שלי נהייתה מוארת!",
     author: "יעקב, בן 82",
     role: "קשיש",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=56&h=56&fit=crop&crop=face&fm=webp&q=80",
   },
 ];
 
@@ -65,6 +65,9 @@ const TestimonialsSection = () => {
                   src={testimonial.image}
                   alt={testimonial.author}
                   className="w-14 h-14 rounded-full object-cover border-2 border-accent/20"
+                  width={56}
+                  height={56}
+                  loading="lazy"
                 />
                 <div>
                   <p className="font-bold text-primary">{testimonial.author}</p>
