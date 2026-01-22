@@ -193,8 +193,8 @@ serve(async (req) => {
       }
     }
 
-    // Sanitize inputs
-    const sanitizedData = {
+    // Sanitize inputs - user_id will be added after account creation if applicable
+    const sanitizedData: Record<string, unknown> = {
       first_name: sanitizeString(body.first_name).substring(0, 100),
       last_name: sanitizeString(body.last_name).substring(0, 100),
       birth_date: body.birth_date || null,
@@ -204,6 +204,7 @@ serve(async (req) => {
       origin: body.origin,
       gender: body.gender,
       status: "pending",
+      user_id: null, // Will be set if account is created
     };
 
     let userId: string | null = null;
@@ -231,6 +232,8 @@ serve(async (req) => {
       }
 
       userId = authData.user?.id || null;
+      // Link the elderly record to the user account
+      sanitizedData.user_id = userId;
       console.log("User account created:", userId);
     }
 
