@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AddressAutocomplete from "@/components/forms/AddressAutocomplete";
-import { Heart, User, MapPin, Calendar, Utensils, ArrowRight } from "lucide-react";
+import { Heart, User, MapPin, Calendar, Utensils, ArrowRight, Phone, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 type Origin = "sephardic" | "ashkenazi";
 type Gender = "male" | "female";
@@ -19,6 +20,8 @@ const ElderlyRegistration = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [wantAccount, setWantAccount] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   const [formData, setFormData] = useState({
     firstName: "",
@@ -27,6 +30,9 @@ const ElderlyRegistration = () => {
     address: "",
     origin: "" as Origin | "",
     gender: "" as Gender | "",
+    phone: "",
+    email: "",
+    password: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,9 +65,74 @@ const ElderlyRegistration = () => {
       return;
     }
 
+    // Validate email if provided
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      toast({
+        title: "שגיאה",
+        description: "כתובת אימייל לא תקינה",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate phone if provided (Israeli format)
+    if (formData.phone && !/^0[0-9]{8,9}$/.test(formData.phone.replace(/[-\s]/g, ""))) {
+      toast({
+        title: "שגיאה",
+        description: "מספר טלפון לא תקין (למשל: 0501234567)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate password if wants account
+    if (wantAccount) {
+      if (!formData.email) {
+        toast({
+          title: "שגיאה",
+          description: "נא להזין אימייל כדי לפתוח חשבון",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (formData.password.length < 6) {
+        toast({
+          title: "שגיאה",
+          description: "הסיסמה חייבת להכיל לפחות 6 תווים",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
     setIsSubmitting(true);
 
     try {
+      // If user wants account, create auth user first
+      if (wantAccount && formData.email && formData.password) {
+        const { error: authError } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/`,
+          },
+        });
+
+        if (authError) {
+          if (authError.message.includes("already registered")) {
+            toast({
+              title: "שגיאה",
+              description: "כתובת האימייל הזו כבר רשומה במערכת",
+              variant: "destructive",
+            });
+          } else {
+            throw authError;
+          }
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       const { error } = await supabase.from("elderly" as any).insert({
         first_name: formData.firstName.trim(),
         last_name: formData.lastName.trim(),
@@ -69,12 +140,14 @@ const ElderlyRegistration = () => {
         address: formData.address.trim() || null,
         origin: formData.origin,
         gender: formData.gender,
+        phone: formData.phone.trim() || null,
+        email: formData.email.trim() || null,
       } as any);
 
       if (error) throw error;
 
       toast({
-        title: "נרשמת בהצלחה! 🎉",
+        title: wantAccount ? "נרשמת והחשבון נפתח בהצלחה! 🎉" : "נרשמת בהצלחה! 🎉",
         description: "בקרוב ניצור איתך קשר ונמצא לך משפחה מארחת לסעודת שבת",
       });
 
@@ -186,6 +259,102 @@ const ElderlyRegistration = () => {
                     <p className="text-xs text-muted-foreground">
                       ככה נמצא לכם משפחה קרובה מהשכונה 🏠
                     </p>
+                  </div>
+
+                  {/* Phone - Optional */}
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-primary" />
+                      טלפון (אופציונלי)
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="למשל: 050-1234567"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="text-right"
+                      dir="ltr"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      כדי שנוכל ליצור קשר ולתאם את הסעודות 📞
+                    </p>
+                  </div>
+
+                  {/* Email - Optional */}
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-primary" />
+                      אימייל (אופציונלי)
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="example@email.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="text-right"
+                      dir="ltr"
+                    />
+                  </div>
+
+                  {/* Create Account Option */}
+                  <div className="space-y-4 p-4 bg-accent/5 rounded-xl border border-accent/20">
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        id="wantAccount"
+                        checked={wantAccount}
+                        onCheckedChange={(checked) => setWantAccount(checked === true)}
+                      />
+                      <Label htmlFor="wantAccount" className="cursor-pointer flex items-center gap-2">
+                        <Lock className="w-4 h-4 text-accent" />
+                        אני רוצה לפתוח חשבון באתר
+                      </Label>
+                    </div>
+                    <p className="text-xs text-muted-foreground mr-6">
+                      עם חשבון תוכלו לעקוב אחרי הסעודות שלכם ולראות פרטי המשפחות המארחות 🏠
+                    </p>
+
+                    {wantAccount && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="space-y-2 pt-2"
+                      >
+                        <Label htmlFor="password" className="flex items-center gap-2">
+                          <Lock className="w-4 h-4 text-primary" />
+                          סיסמה *
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="לפחות 6 תווים"
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            className="text-right pr-10"
+                            dir="ltr"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            {showPassword ? (
+                              <EyeOff className="w-4 h-4" />
+                            ) : (
+                              <Eye className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+                        {!formData.email && (
+                          <p className="text-xs text-destructive">
+                            נא להזין אימייל למעלה כדי לפתוח חשבון
+                          </p>
+                        )}
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Gender Selection */}
