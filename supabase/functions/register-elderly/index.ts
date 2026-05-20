@@ -4,9 +4,14 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
   "https://kshishi-shabat.lovable.app",
+  "https://kshishi-shabat2.lovable.app",
   "https://id-preview--78338e7a-87c5-44e8-892a-b9e4afa14724.lovable.app",
   "http://localhost:8080",
   "http://localhost:5173",
+  "http://localhost:3000",
+  "http://127.0.0.1:8080",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:3000",
 ];
 
 const normalizeOrigin = (origin: string | null) => {
