@@ -1,73 +1,65 @@
-# Welcome to your Lovable project
+# קשישי שבת
 
-## Project info
+אפליקציה לחיבור קשישים עם מתנדבים לארוחות שבת.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## עבודה מקומית עם VS Code + Onlook
 
-## How can I edit this code?
+### דרישות מקדימות
+- Node.js 18+ ו-npm ([להתקנה עם nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- VS Code
+- [Onlook](https://onlook.com) — עורך ויזואלי לרכיבי React (אופציונלי, לעיצוב)
 
-There are several ways of editing your application.
+### שלבי התקנה
 
-**Use Lovable**
+**1. שכפול הפרויקט**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+קודם חבר את הפרויקט ל-GitHub מתוך Lovable (כפתור GitHub בפינה הימנית למעלה → Connect to GitHub), ואז:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
+cd <PROJECT_FOLDER>
+npm install
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+**2. יצירת קובץ `.env` מקומי**
 
-# Step 3: Install the necessary dependencies.
-npm i
+הקובץ `.env` לא נדחף ל-Git. צור אותו בשורש הפרויקט (אפשר להעתיק מ-`.env.example`):
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```
+VITE_SUPABASE_PROJECT_ID="utbezivtozaeepvmqlfk"
+VITE_SUPABASE_URL="https://utbezivtozaeepvmqlfk.supabase.co"
+VITE_SUPABASE_PUBLISHABLE_KEY="<העתק מפרויקט Lovable>"
+```
+
+את הערך של `VITE_SUPABASE_PUBLISHABLE_KEY` ניתן להעתיק מהפרויקט ב-Lovable (קובץ `.env` המנוהל אוטומטית).
+
+**3. הרצת שרת פיתוח**
+
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+האתר ירוץ על `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### עבודה עם Onlook
 
-**Use GitHub Codespaces**
+1. הורד והתקן את [Onlook](https://onlook.com) (Mac / Windows / Linux).
+2. פתח את Onlook → "Open Project" → בחר את תיקיית הפרויקט.
+3. Onlook יזהה אוטומטית Vite + React + Tailwind ויריץ את שרת הפיתוח.
+4. פתח במקביל את VS Code על אותה תיקייה — כל שינוי ויזואלי שתעשה ב-Onlook יישמר ישירות לקבצי `.tsx`, ו-VS Code יציג אותו מיידית.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### סנכרון חזרה ל-Lovable
 
-## What technologies are used for this project?
+כל `git push` ל-GitHub יסתנכרן אוטומטית בחזרה לפרויקט ב-Lovable.
 
-This project is built with:
+```sh
+git add .
+git commit -m "תיאור השינוי"
+git push
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## טכנולוגיות
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- Vite + React 18 + TypeScript
+- Tailwind CSS + shadcn/ui
+- Lovable Cloud (Supabase) — בסיס נתונים, אימות ו-Edge Functions
